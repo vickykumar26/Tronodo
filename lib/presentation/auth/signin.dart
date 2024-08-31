@@ -3,9 +3,11 @@ import 'package:tronodo/common/widgets/app_bar/app_bar.dart';
 import 'package:tronodo/common/widgets/button/basic_app_button.dart';
 import 'package:tronodo/data/models/auth/signin_user_req.dart';
 import 'package:tronodo/domain/usecases/auth/signin.dart';
+import 'package:tronodo/presentation/auth/forgot_password.dart';
 import 'package:tronodo/presentation/auth/signup.dart';
 import '../../service_locator.dart';
 import '../home/pages/home.dart';
+import '../utils/utils.dart';
 
 class Signin extends StatefulWidget {
   const Signin({super.key});
@@ -59,6 +61,8 @@ class _SigninState extends State<Signin> {
               height: 20,
             ),
             _passwordField(context),
+            const SizedBox(height: 10,),
+            _forgotPassword(),
             const SizedBox(
               height: 20,
             ),
@@ -74,12 +78,12 @@ class _SigninState extends State<Signin> {
                           (l){
                         var snackbar = SnackBar(content: Text(l));
                         ScaffoldMessenger.of(context).showSnackBar(snackbar);
-                      },
+                        },
                           (r){
-                        Navigator.pushAndRemoveUntil(
+                            Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(builder: (BuildContext context) => const HomePage()),
-                                (route) => false
+                                (route) => false,
                         );
                       }
                   );
@@ -128,6 +132,16 @@ class _SigninState extends State<Signin> {
           ),
         ),
       ).applyDefaults(Theme.of(context).inputDecorationTheme),
+    );
+  }
+  
+  Widget _forgotPassword() {
+    return Align(
+      alignment: Alignment.bottomRight,
+      child: TextButton(onPressed: (){
+        Navigator.push(context, MaterialPageRoute(builder: (context) => const ForgotPassword()));
+      }, child: const Text('Forgot Password?')
+      )
     );
   }
 
