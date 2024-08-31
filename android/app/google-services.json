@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "681773927655",
+    "project_id": "tronodo-c547d",
+    "storage_bucket": "tronodo-c547d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:681773927655:android:c3a5bb97d30227e52ce642",
+        "android_client_info": {
+          "package_name": "com.example.tronodo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDg_equTvNNP8T_LBXZL1lrtysGJ1gWwLQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:681773927655:android:bbda9e8932471e572ce642",
+        "android_client_info": {
+          "package_name": "com.music.tronodo.tronodo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDg_equTvNNP8T_LBXZL1lrtysGJ1gWwLQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
