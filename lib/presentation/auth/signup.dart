@@ -19,69 +19,75 @@ class _SignupState extends State<Signup> {
   final TextEditingController _fullName = TextEditingController();
   final TextEditingController _email = TextEditingController();
   final TextEditingController _password = TextEditingController();
+  final _FormKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      bottomNavigationBar: _signinText(context),
-      appBar: BasicAppBar(
-        title: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(
-                height: 40,
-                width: 40,
-                child: Image.asset('assets/images/app_icon.png')
-            ),
-            const Text('Tronodo', style: TextStyle(fontSize: 30,
-                fontFamily: 'Satoshi Bold',
-                color: Colors.greenAccent),)
-          ],
+    return Form(
+      key: _FormKey,
+      child: Scaffold(
+        bottomNavigationBar: _signinText(context),
+        appBar: BasicAppBar(
+          title: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                  height: 40,
+                  width: 40,
+                  child: Image.asset('assets/images/app_icon.png')
+              ),
+              const Text('Tronodo', style: TextStyle(fontSize: 30,
+                  fontFamily: 'Satoshi Bold',
+                  color: Colors.greenAccent),)
+            ],
+          ),
         ),
-      ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 30,
-          vertical: 50,
-        ),
-        child: Column(
-          children: [
-            _registerText(),
-            const SizedBox(height: 50,),
-            _fullNameField(context),
-            const SizedBox(height: 20,),
-            _emailField(context),
-            const SizedBox(height: 20,),
-            _passwordField(context),
-            const SizedBox(height: 20,),
-            BasicAppButton(
-                onPressed: () async {
-                  var result = await sl<SignupUseCase>().call(
-                    params: CreateUserReq(
-                        fullName: _fullName.text.toString(),
-                        email: _email.text.toString(),
-                        password: _password.text.toString(),
-                    )
-                  );
-                  result.fold(
-                      (l){
-                        var snackbar = SnackBar(content: Text(l));
-                        ScaffoldMessenger.of(context).showSnackBar(snackbar);
-                      },
-                      (r){
-                        Navigator.pushAndRemoveUntil(
-                            context,
-                            MaterialPageRoute(builder: (BuildContext context) => const HomePage()),
-                            (route) => false
-                        );
-                      }
-                  );
-                },
-                title: 'Create Account'
-            )
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 30,
+            vertical: 50,
+          ),
+          child: Column(
+            children: [
+              _registerText(),
+              const SizedBox(height: 50,),
+              _fullNameField(context),
+              const SizedBox(height: 20,),
+              _emailField(context),
+              const SizedBox(height: 20,),
+              _passwordField(context),
+              const SizedBox(height: 20,),
+              BasicAppButton(
+                  onPressed: () async {
+                    if(_FormKey.currentState?.validate() == true){
 
-          ],
+                    }
+                    var result = await sl<SignupUseCase>().call(
+                      params: CreateUserReq(
+                          fullName: _fullName.text.toString(),
+                          email: _email.text.toString(),
+                          password: _password.text.toString(),
+                      )
+                    );
+                    result.fold(
+                        (l){
+                          var snackbar = SnackBar(content: Text(l));
+                          ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                        },
+                        (r){
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(builder: (BuildContext context) => const HomePage()),
+                              (route) => false
+                          );
+                        }
+                    );
+                  },
+                  title: 'Create Account'
+              )
+      
+            ],
+          ),
         ),
       ),
     );
@@ -99,9 +105,15 @@ class _SignupState extends State<Signup> {
   }
 
   Widget _fullNameField(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: _fullName,
       keyboardType: TextInputType.name,
+      validator: (value){
+        if(value?.isEmpty == true){
+          return "Please enter your name";
+        }
+        return null;
+      },
       decoration: const InputDecoration(
           hintText: 'Full Name'
       ).applyDefaults(
@@ -110,9 +122,15 @@ class _SignupState extends State<Signup> {
     );
   }
   Widget _emailField(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: _email,
       keyboardType: TextInputType.emailAddress,
+      validator: (value){
+        if(value?.isEmpty == true){
+          return "Please enter your email";
+        }
+        return null;
+      },
       decoration: const InputDecoration(
           hintText: 'Enter Email'
       ).applyDefaults(
@@ -121,10 +139,16 @@ class _SignupState extends State<Signup> {
     );
   }
   Widget _passwordField(BuildContext context) {
-    return TextField(
+    return TextFormField(
       controller: _password,
       keyboardType: TextInputType.visiblePassword,
       obscureText: _isPasswordShown,
+        validator: (value){
+          if(value?.isEmpty == true){
+            return "Please enter password";
+          }
+          return null;
+      },
       decoration:  InputDecoration(
           hintText: 'Password',
         suffixIcon: Padding(

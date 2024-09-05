@@ -27,14 +27,14 @@ class _SongPlayerState extends State<SongPlayer> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Now playing', style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold)),
+        title: const Text('Now playing', style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold)),
       ),
       body: BlocProvider(
         create: (_) => SongPlayerCubit()..loadPlaylist(widget.playlist, widget.startIndex),
         child: BlocBuilder<SongPlayerCubit, SongPlayerState>(
           builder: (context, state) {
             if (state is SongPlayerLoading) {
-              return Center(
+              return const Center(
                 child: CircularProgressIndicator(),
               );
             }

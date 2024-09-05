@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:just_audio/just_audio.dart';
-import 'package:meta/meta.dart';
 import 'package:tronodo/domain/entities/song/song.dart';
 import 'package:tronodo/presentation/song_player/bloc/song_player_state.dart';
 

@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:tronodo/common/helpers/is_dark.dart';
 import 'package:tronodo/presentation/utils/utils.dart';
 import '../../../common/widgets/favorite_button/favorite_button.dart';
+import '../../../core/configs/assets/app_vectors.dart';
 import '../../../core/configs/constants/app_urls.dart';
 import '../../auth/signup_or_signin.dart';
 import '../../song_player/pages/song_player.dart';
@@ -69,6 +71,60 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
+  // Widget _profileInfo(BuildContext context) {
+  //   return BlocProvider(
+  //     create: (context) => ProfileInfoCubit()..getUser(),
+  //     child: Container(
+  //       height: MediaQuery.of(context).size.height / 3.5,
+  //       width: double.infinity,
+  //       decoration: BoxDecoration(
+  //         color: context.isDarkMode ? const Color(0xff2C2B2B) : Colors.white,
+  //         borderRadius: const BorderRadius.only(
+  //           bottomRight: Radius.circular(50),
+  //           bottomLeft: Radius.circular(50),
+  //         ),
+  //       ),
+  //       child: BlocBuilder<ProfileInfoCubit, ProfileInfoState>(
+  //         builder: (context, state) {
+  //           if (state is ProfileInfoLoading) {
+  //             return Center(child: const CircularProgressIndicator());
+  //           }
+  //           if (state is ProfileInfoLoaded) {
+  //             return Column(
+  //               mainAxisAlignment: MainAxisAlignment.center,
+  //               children: [
+  //                 Container(
+  //                   height: 90,
+  //                   width: 90,
+  //                   decoration: BoxDecoration(
+  //                     shape: BoxShape.circle,
+  //                     image: DecorationImage(
+  //                       image: NetworkImage(state.userEntity.imageURL!),
+  //                     ),
+  //                   ),
+  //                 ),
+  //                 const SizedBox(height: 15),
+  //                 Text(
+  //                   state.userEntity.fullName!,
+  //                   style: const TextStyle(
+  //                     fontSize: 22,
+  //                     fontWeight: FontWeight.bold,
+  //                   ),
+  //                 ),
+  //                 const SizedBox(height: 10),
+  //                 Text(state.userEntity.email!),
+  //               ],
+  //             );
+  //           }
+  //           if (state is ProfileInfoFailure) {
+  //             return const Center(child: Text('Please try again'));
+  //           }
+  //           return Container();
+  //         },
+  //       ),
+  //     ),
+  //   );
+  // }
   Widget _profileInfo(BuildContext context) {
     return BlocProvider(
       create: (context) => ProfileInfoCubit()..getUser(),
@@ -82,47 +138,58 @@ class _ProfilePageState extends State<ProfilePage> {
             bottomLeft: Radius.circular(50),
           ),
         ),
-        child: BlocBuilder<ProfileInfoCubit, ProfileInfoState>(
-          builder: (context, state) {
-            if (state is ProfileInfoLoading) {
-              return Center(child: const CircularProgressIndicator());
-            }
-            if (state is ProfileInfoLoaded) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    height: 90,
-                    width: 90,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image: NetworkImage(state.userEntity.imageURL!),
+        child: Stack(
+          children: [
+            Align(
+              alignment: Alignment.bottomRight,
+              child: SvgPicture.asset(AppVectors.bottomPattern),
+            ),
+            BlocBuilder<ProfileInfoCubit, ProfileInfoState>(
+              builder: (context, state) {
+                if (state is ProfileInfoLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is ProfileInfoLoaded) {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Center(
+                        child: Container(
+                          height: 90,
+                          width: 90,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              image: NetworkImage(state.userEntity.imageURL ?? ''),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  const SizedBox(height: 15),
-                  Text(
-                    state.userEntity.fullName!,
-                    style: const TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  const SizedBox(height: 10),
-                  Text(state.userEntity.email!),
-                ],
-              );
-            }
-            if (state is ProfileInfoFailure) {
-              return const Center(child: Text('Please try again'));
-            }
-            return Container();
-          },
+                      const SizedBox(height: 15),
+                      Text(
+                        state.userEntity.fullName ?? 'No Name',
+                        style: const TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(state.userEntity.email ?? 'No Email'),
+                    ],
+                  );
+                } else if (state is ProfileInfoFailure) {
+                  return const Center(child: Text('Please try again'));
+                } else {
+                  return Container(); // This is the default case
+                }
+              },
+            ),
+          ],
         ),
       ),
     );
   }
+
 
   Widget _favoriteSongs() {
     return BlocProvider(
@@ -176,7 +243,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   ),
                                   const SizedBox(width: 10),
                                   SizedBox(
-                                    width: 200,
+                                    width: MediaQuery.of(context).size.width*0.4,
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [

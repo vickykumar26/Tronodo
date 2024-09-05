@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:tronodo/common/helpers/is_dark.dart';
 import 'package:tronodo/core/configs/assets/app_images.dart';
 import 'package:tronodo/core/configs/assets/app_vectors.dart';
-import 'package:tronodo/core/configs/theme/app_colors.dart';
 import 'package:tronodo/presentation/home/widgets/news_songs.dart';
 import 'package:tronodo/presentation/profile/pages/profile.dart';
 import '../../../common/widgets/app_bar/app_bar.dart';
@@ -17,13 +15,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
-  late TabController _tabController;
+  //late TabController _tabController;
 
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: 4, vsync: this);
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _tabController = TabController(length: 4, vsync: this);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -43,8 +41,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           mainAxisSize: MainAxisSize.min,
           children: [
             SizedBox(
-              height: 40,
-              width: 40,
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width/10,
               child: Image.asset('assets/images/app_icon.png'),
             ),
             const SizedBox(width: 8), // Space between logo and text
@@ -62,19 +60,14 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       body: Column(
         children: [
           _homeTopCard(),
-          SizedBox(height: 10,),
+          const SizedBox(height: 10,),
           //_tabs(),
           const Text('New Songs',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,),),
-          Padding(
-            padding: const EdgeInsets.all(20.0),
+          const Padding(
+            padding: EdgeInsets.all(20.0),
             child: SizedBox(
               height: 260,
-              child: TabBarView(
-                controller: _tabController,
-                children: const [
-                  NewsSongs(), 
-                ],
-              ),
+              child: NewsSongs(),
             ),
           ),
           const Expanded(child: PlayList()),  // Ensure PlayList is a StatelessWidget or StatefulWidget
@@ -86,7 +79,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   Widget _homeTopCard() {
     return Center(
       child: SizedBox(
-        height: 140,
+        height: MediaQuery.of(context).size.height*0.2,
         child: Stack(
           children: [
             Align(

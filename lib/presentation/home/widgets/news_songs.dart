@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tronodo/common/helpers/is_dark.dart';
@@ -22,7 +21,7 @@ class _NewsSongsState extends State<NewsSongs> {
     return BlocProvider(
       create: (_) => NewsSongsCubit()..getNewsSongs(),
       child: SizedBox(
-        height: 200,
+        height: MediaQuery.of(context).size.height,
         child: BlocBuilder<NewsSongsCubit, NewsSongsState>(
           builder: (context, state) {
             if (state is NewsSongsLoading) {
@@ -62,7 +61,7 @@ class _NewsSongsState extends State<NewsSongs> {
                       )));
             },
             child: SizedBox(
-              width: 160,
+              width: MediaQuery.of(context).size.width/2.5,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -80,8 +79,8 @@ class _NewsSongsState extends State<NewsSongs> {
                       child: Align(
                         alignment: Alignment.bottomRight,
                         child: Container(
-                          height: 40,
-                          width: 40,
+                          height: MediaQuery.of(context).size.height*0.1,
+                          width: MediaQuery.of(context).size.width*0.1,
                           transform: Matrix4.translationValues(10, 10, 0),
                           decoration: BoxDecoration(
                               shape: BoxShape.circle,

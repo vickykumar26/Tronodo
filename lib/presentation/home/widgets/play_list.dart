@@ -105,23 +105,26 @@ class PlayList extends StatelessWidget {
                     const SizedBox(
                       width: 10,
                     ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          songs[index].title,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 16),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Text(
-                          songs[index].artist,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.w400, fontSize: 11),
-                        ),
-                      ],
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width/2,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            songs[index].title,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 16),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            songs[index].artist,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.w400, fontSize: 11),
+                          ),
+                        ],
+                      ),
                     )
                   ],
                 ),

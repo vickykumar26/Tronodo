@@ -10,6 +10,7 @@ import 'core/configs/theme/app_theme.dart';
 import 'firebase_options.dart';
 import 'service_locator.dart';
 
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   HydratedBloc.storage = await HydratedStorage.build(
